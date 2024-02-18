@@ -13,6 +13,7 @@ function Add-applicationPool {
         c:\windows\system32\inetsrv\appcmd.exe $appCmdArgs.Split(' ') 
         } -ArgumentList $applicationPoolName -AsJob
     }
+    #substituir o caminho c:\windows\system32\inetsrv\appcmd.exe para o seu caminho local
 
     $jobs | Wait-Job | Select-Object @{Expression={ receive-job $_ };Label="resultado"},"Name"
     $jobs | Remove-Job
