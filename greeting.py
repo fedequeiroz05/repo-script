@@ -10,3 +10,4 @@ line 3
 
 username = input("enter your name:")
 print("username is:" + username)
+print("Welcome to Coursera " + input("What is your name? "))
