@@ -9,7 +9,8 @@ terraform {
 }
 
 provider "azurerm" {
-  # Configuration options
+  skip_provider_registration = true # This is only required when the User, Service Principal, or Identity running Terraform lacks the permissions to register Azure Resource Providers.
+  features {}
 }
 
 #create a resource group
@@ -26,7 +27,7 @@ resource "azurerm_virtual_network" "vnet" {
   resource_group_name = azurerm_resource_group.rg-tf
   location = azurerm_resource_group.vnet-win
   address_space = ["10.0.0.0/16"]  
-}
+  }
 
 # Deploy subnet 
 resource "azurerm_subnet" "sub01" {
