@@ -87,7 +87,7 @@ Help Get-MachineInfo -ShowWindow
 # Creating menu of possible values of a parameter
 
 function Get-MachineInfo {
-    [CmdletBinding(SupportsShouldProcess)]
+    [CmdletBinding(SupportsShouldContinue)]
     param (
         [ValidateSet ("Dell", "IBM" , "Lenovo")]
         [String[]]$make = "IBM",
