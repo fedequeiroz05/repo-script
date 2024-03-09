@@ -24,9 +24,43 @@ resource "azurerm_resource_group" "rg-tf" {
 #Deploy a Azure virtual network
  resource  "azurerm_virtual_network" "vnet01" {
  name = "vnet01-prod"
+ address_space = ["10.50.0.0/16"]
  location = azurerm_resource_group.rg-tf.location
  resource_group_name = azurerm_resource_group.rg-tf.name
- address_space = ["10.50.0.0/16"]
 
 }
 
+#Deploy a Azure Subnet
+ resource "azure_subnet" "subnet01" {
+  name = "sub-prod"
+  resource_group_name = azurerm_resource_group.rg-tf.name
+  virtual_network_name = azurerm_virtual_network.vnet01.name
+  address_prefixes = ["10.50.1.0/24"]  
+  depends_on = [azurerm_virtual_network.vnet01]
+
+ }
+
+#Deploy a NSG
+ resource "azure_network_security_group" "nsg01" {
+  name = "nsg01-prod"
+  location = azurerm_resource_group.rg-tf.location
+
+  security_rule {
+    name = "nsg-sec-prod"
+    priority = 110
+    direction = "Inbound"
+    description = "group_security_production"
+    protocol = "tcp"
+    source_port_range = "*"
+    destination_port_range = "*"
+    source_address_prefix = "*"
+    destination_adress_prefix = "*"
+  }
+  
+  tags = {
+    environmnet = "Production"
+  }
+
+  depends_on = [azure_network_security_group.nsg01]
+
+ }
