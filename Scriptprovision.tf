@@ -20,3 +20,13 @@ resource "azurerm_resource_group" "rg-tf" {
   location = "eastus"
   
 }
+
+#Deploy a Azure virtual network
+ resource  "azurerm_virtual_network" "vnet01" {
+ name = "vnet01-prod"
+ location = azurerm_resource_group.rg-tf.location
+ resource_group_name = azurerm_resource_group.rg-tf.name
+ address_space = ["10.50.0.0/16"]
+
+}
+
